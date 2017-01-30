@@ -14,46 +14,119 @@
 		<title>COMPANY</title>
 	</head>
 	<body>
-		<nav class="navbar navbar-default">
-			<div class="container">
-				<!-- Brand and toggle get grouped for better mobile display -->
-				<div class="navbar-header">
-					<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse">
-						<span class="sr-only">Toggle navigation</span>
-						<span class="icon-bar"></span>
-						<span class="icon-bar"></span>
-						<span class="icon-bar"></span>
-					</button>
-					<a class="navbar-brand">COMPANY</a>
-				</div>
+		<nav class="navbar navbar-default navbar-fixed-top">
+		<div class="container-fluid">
+			<!-- Brand and toggle get grouped for better mobile display -->
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle collapsed"
+					data-toggle="collapse" data-target="#navbar-collapse">
+					<span class="sr-only">Toggle navigation</span> <span
+						class="icon-bar"></span> <span class="icon-bar"></span> <span
+						class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand">COMPANY</a>
+			</div>
 
-				<!-- Collect the nav links, forms, and other content for toggling -->
-				<div class="collapse navbar-collapse" id="navbar-collapse">
-					<ul class="nav navbar-nav">
-						<li>
-							<a href="index.html">在庫管理</a>
-						</li>
-					</ul>
-					<ul class="nav navbar-nav navbar-right">
-						<li class="dropdown">
-							<a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-cog"></span> システム <span class="caret"></span></a>
-							<ul class="dropdown-menu">
-								<li>
-									<a onclick="window.location.reload(true);"><span class="glyphicon glyphicon-refresh"></span> リロード</a>
-								</li>
-								<li>
-									<a onclick="DB.init();"><span class="glyphicon glyphicon-repeat"></span> DB初期化</a>
-								</li>
-								<li role="separator" class="divider"></li>
-								<li>
-									<a onclick="DB.remove();"><span class="glyphicon glyphicon-trash"></span> DB削除</a>
-								</li>
-							</ul>
-						</li>
-					</ul>
-				</div><!-- /.navbar-collapse -->
-			</div><!-- /.container-fluid -->
-		</nav>
+			<!-- Collect the nav links, forms, and other content for toggling -->
+			<div class="collapse navbar-collapse" id="navbar-collapse">
+				<ul class="nav navbar-nav">
+					<li><a href="index.html">在庫管理</a></li>
+				</ul>
+				<ul class="nav navbar-nav navbar-right">
+					<li class="dropdown"><a href="#" class="dropdown-toggle"
+						data-toggle="dropdown"><span class="glyphicon glyphicon-cog"></span>
+							システム <span class="caret"></span></a>
+						<ul class="dropdown-menu">
+							<li><a onclick="window.location.reload(true);"><span
+									class="glyphicon glyphicon-refresh"></span> リロード</a></li>
+							<li><a onclick="DB.init();"><span
+									class="glyphicon glyphicon-repeat"></span> DB初期化</a></li>
+							<li role="separator" class="divider"></li>
+							<li><a onclick="DB.remove();"><span
+									class="glyphicon glyphicon-trash"></span> DB削除</a></li>
+						</ul></li>
+				</ul>
+			</div>
+			<!-- /.navbar-collapse -->
+		</div>
+		<!-- /.container-fluid -->
+	</nav>
+
+	<nav class="navbar navbar-default navbar-fixed-bottom">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle collapsed"
+					data-toggle="collapse" data-target="#navbarBottom">
+					<span class="sr-only">Toggle navigation</span> <span
+						class="icon-bar"></span> <span class="icon-bar"></span> <span
+						class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand"> メニュー </a>
+			</div>
+			
+			<!-- Collect links of the function which are main in this system  -->
+			<div class="collapse navbar-collapse" id="navbarBottom">
+				<ul class="nav navbar-nav">
+					<li class="dropup"><a href="#" class="dropdown-toggle"
+						data-toggle="dropdown"> 入庫 </a>
+						<ul class="dropdown-menu">
+							<li><a href="#"> 入庫入力</a></li>
+							<li><a href="#"> 入庫予定照会</a></li>
+							<li role="separator" class="divider"></li>
+							<li><a href="#"> 発注データ取り込み</a></li>
+						</ul></li>
+					<li class="dropup"><a href="#" class="dropdown-toggle"
+						data-toggle="dropdown"> 出庫</a>
+						<ul class="dropdown-menu">
+							<li><a href="#"> 入庫入力</a></li>
+							<li><a href="#"> 入庫予定照会</a></li>
+							<li role="separator" class="divider"></li>
+							<li><a href="#"> 発注データ取り込み</a></li>
+						</ul></li>
+					<li class="dropup"><a href="#" class="dropdown-toggle"
+						data-toggle="dropdown"> 返品 </a>
+						<ul class="dropdown-menu">
+							<li><a href="#"> 入庫入力</a></li>
+							<li><a href="#"> 入庫予定照会</a></li>
+							<li role="separator" class="divider"></li>
+							<li><a href="#"> 発注データ取り込み</a></li>
+						</ul></li>
+					<li class="dropup"><a href="#" class="dropdown-toggle"
+						data-toggle="dropdown"> 戻入 </a>
+						<ul class="dropdown-menu">
+							<li><a href="#"> 入庫入力</a></li>
+							<li><a href="#"> 入庫予定照会</a></li>
+							<li role="separator" class="divider"></li>
+							<li><a href="#"> 発注データ取り込み</a></li>
+						</ul></li>
+					<li class="dropup"><a href="#" class="dropdown-toggle"
+						data-toggle="dropdown"> 倉庫間移動 </a>
+						<ul class="dropdown-menu">
+							<li><a href="#"> 入庫入力</a></li>
+							<li><a href="#"> 入庫予定照会</a></li>
+							<li role="separator" class="divider"></li>
+							<li><a href="#"> 発注データ取り込み</a></li>
+						</ul></li>
+					<li class="dropup"><a href="#" class="dropdown-toggle"
+						data-toggle="dropdown"> ロケーション</a>
+						<ul class="dropdown-menu">
+							<li><a href="#"> 入庫入力</a></li>
+							<li><a href="#"> 入庫予定照会</a></li>
+							<li role="separator" class="divider"></li>
+							<li><a href="#"> 発注データ取り込み</a></li>
+						</ul></li>
+					<li class="dropup"><a href="#" class="dropdown-toggle"
+						data-toggle="dropdown"> 在庫状況</a>
+						<ul class="dropdown-menu">
+							<li><a href="#"> 入庫入力</a></li>
+							<li><a href="#"> 入庫予定照会</a></li>
+							<li role="separator" class="divider"></li>
+							<li><a href="#"> 発注データ取り込み</a></li>
+						</ul></li>
+				</ul>
+			</div>
+		</div>
+	</nav>
 
 		<div class="container">
 

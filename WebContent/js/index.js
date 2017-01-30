@@ -1,3 +1,26 @@
+// input要素で選択したCSVから情報を読み取る
+function loadFile(event){
+	alasql('SELECT * FROM FILE(?,{headers:true})',[event],function(data){
+		print(data)
+		console.log(JSON.stringify(event))
+	})
+}
+function print(x){
+	console.log(document.getElementById('readFile').textContent +=
+		JSON.stringify(x, null,'\t')+"\n");
+}
+
+/*// ドロップダウンのマウスオーバー
+$('.dropdown > .dropdown-menu').hover(
+	function(){
+		$(this).css('display','block')
+	},
+	function(){
+		$(this).css('display','none')
+	}
+	);
+*/
+
 // 検索ボックス作成
 var rows = alasql('SELECT * FROM whouse;');
 for (var i = 0; i < rows.length; i++) {
@@ -16,6 +39,20 @@ for (var i = 0; i < rows.length; i++) {
 	option.text(row.kind.text);
 	$('select[name="q2"]').append(option);
 }
+
+// 商品コード入力補助
+var datalist = $('<datalist id="inputCodeList"></datalist>')
+var items = alasql('SELECT code, detail, maker FROM item');
+for(var i = 0; i < items.length; i++ ){
+	var item = items[i]
+	var option = $('<option></option>');
+	option.val(item.code);
+	option.text(item.maker + '   ' + item.detail);
+	datalist.append(option);
+}
+var inputQ3 = $('input[name="q3"]');
+inputQ3.attr("list","inputCodeList");
+inputQ3.append(datalist);
 
 // 検索条件の取得
 var q1 = parseInt($.url().param('q1') || '0');
@@ -50,8 +87,7 @@ for (var i = 0; i < stocks.length; i++) {
 	tr.append('<td>' + stock.item.maker + '</td>');
 	tr.append('<td>' + stock.item.detail + '</td>');
 	tr.append('<td style="text-align: right;">' + numberWithCommas(stock.item.price) + '</td>');
-	tr.append('<td style="text-align: right;">' + stock.stock.balance + '</td>');
-	tr.append('<td>' + stock.item.unit + '</td>');
+	tr.append('<td style="text-align: right;">' + stock.stock.balance + stock.item.unit + '</td>');
 	tr.appendTo(tbody);
 }
 

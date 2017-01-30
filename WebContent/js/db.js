@@ -62,8 +62,136 @@ DB.load = function() {
 				}
 			});
 
+	// 入庫関連DB
+	//　発注データ
+	alasql('DROP TABLE IF EXISTS whousing_order;');
+	alasql('CREATE TABLE whousing_order(id INT IDENTITY, order_id INT IDENTITY, customer INT, whouse INT, price INT, del_date DATE);');
+	var pwhousing_order = alasql.promise('SELECT MATRIX * FROM CSV("data/WHOUSING-ORDER.csv", {headers: true})').then(
+			function(whousing_orders) {
+				for (var i = 0; i < whousing_orders.length; i++) {
+					var whousing_order = whousing_orders[i];
+					alasql('INSERT INTO whousing_order VALUES(?,?,?,?,?,?);', whousing_order);
+				}
+			});
+	// 発注詳細
+	alasql('DROP TABLE IF EXISTS whousing_detail;');
+	alasql('CREATE TABLE whousing_detail(id INT IDENTITY, order_id INT IDENTITY, item INT, amount INT, price INT);');
+	var pwhousing_detail = alasql.promise('SELECT MATRIX * FROM CSV("data/WHOUSING-DETAIL.csv", {headers: true})').then(
+			function(whousing_details) {
+				for (var i = 0; i < whousing_details.length; i++) {
+					var whousing_detail = whousing_details[i];
+					alasql('INSERT INTO whousing_detail VALUES(?,?,?,?,?);', whousing_detail);
+				}
+			});
+	// 入庫予定
+	alasql('DROP TABLE IF EXISTS whousing;');
+	alasql('CREATE TABLE whousing(id INT IDENTITY, order_id INT IDENTITY, customer INT, whouse INT, price INT, del_date DATE, whoused INT);');
+	var pwhousing = alasql.promise('SELECT MATRIX * FROM CSV("data/WHOUSING.csv", {headers: true})').then(
+			function(whousings) {
+				for (var i = 0; i < whousings.length; i++) {
+					var whousing = whousings[i];
+					alasql('INSERT INTO whousing VALUES(?,?,?,?,?,?,?);', whousing);
+				}
+			});
+/*	// 入庫済み
+	alasql('DROP TABLE IF EXISTS whoused;');
+	alasql('CREATE TABLE whoused(id INT IDENTITY, order_id INT IDENTITY, customer INT, whouse INT, price INT, del_date DATE);');
+	var pwhoused = alasql.promise('SELECT MATRIX * FROM CSV("data/WHOUSED.csv", {headers: true})').then(
+			function(whouseds) {
+				for (var i = 0; i < whouseds.length; i++) {
+					var whoused = whouseds[i];
+					alasql('INSERT INTO whoused VALUES(?,?,?,?,?,?);', whoused);
+				}
+			});*/
+/*	// 入庫済み詳細
+	alasql('DROP TABLE IF EXISTS whoused_detail;');
+	alasql('CREATE TABLE whoused_detail(id INT IDENTITY, order_id INT IDENTITY, item INT, amount INT, price INT);');
+	var pwhoused_detail = alasql.promise('SELECT MATRIX * FROM CSV("data/WHOUSED-DETAIL.csv", {headers: true})').then(
+			function(whoused_details) {
+				for (var i = 0; i < whoused_details.length; i++) {
+					var whoused_detail = whoused_details[i];
+					alasql('INSERT INTO whoused_detail VALUES(?,?,?,?,?);', whoused_detail);
+				}
+			});*/
+
+	// 取引先
+	alasql('DROP TABLE IF EXISTS supplier;');
+	alasql('CREATE TABLE supplier(id INT IDENTITY, name STRING, party STRING, addr STRING, tel STRING);');
+	var psupplier = alasql.promise('SELECT MATRIX * FROM CSV("data/SUPPLIER-SUPPLIER.csv", {headers: true})').then(
+			function(suppliers) {
+				for (var i = 0; i < suppliers.length; i++) {
+					var supplier = suppliers[i];
+					alasql('INSERT INTO supplier VALUES(?,?,?,?,?);', supplier);
+				}
+			});
+	
+	// 出庫関連DB
+	//　受注データ
+	alasql('DROP TABLE IF EXISTS shipping_order;');
+	alasql('CREATE TABLE shipping_order(id INT IDENTITY, order_id INT IDENTITY, customer INT, whouse INT, price INT, del_date DATE);');
+	var pshipping_order = alasql.promise('SELECT MATRIX * FROM CSV("data/SHIPPING-ORDER.csv", {headers: true})').then(
+			function(shipping_orders) {
+				for (var i = 0; i < shipping_orders.length; i++) {
+					var shipping_order = shipping_orders[i];
+					alasql('INSERT INTO shipping_order VALUES(?,?,?,?,?,?);', shipping_order);
+				}
+			});
+	// 受注詳細
+	alasql('DROP TABLE IF EXISTS shipping_detail;');
+	alasql('CREATE TABLE shipping_detail(id INT IDENTITY, order_id INT IDENTITY, item INT, amount INT, price INT);');
+	var pshipping_detail = alasql.promise('SELECT MATRIX * FROM CSV("data/SHIPPING-DETAIL.csv", {headers: true})').then(
+			function(shipping_details) {
+				for (var i = 0; i < shipping_details.length; i++) {
+					var shipping_detail = shipping_details[i];
+					alasql('INSERT INTO shipping_detail VALUES(?,?,?,?,?);', shipping_detail);
+				}
+			});
+	// 出庫予定
+	alasql('DROP TABLE IF EXISTS shipping;');
+	alasql('CREATE TABLE shipping(id INT IDENTITY, order_id INT IDENTITY, customer INT, whouse INT, price INT, del_date DATE, shipped INT);');
+	var pshipping = alasql.promise('SELECT MATRIX * FROM CSV("data/SHIPPING.csv", {headers: true})').then(
+			function(shippings) {
+				for (var i = 0; i < shippings.length; i++) {
+					var shipping = shippings[i];
+					alasql('INSERT INTO shipping VALUES(?,?,?,?,?,?,?);', shipping);
+				}
+			});
+/*	// 出庫済み
+	alasql('DROP TABLE IF EXISTS shipped;');
+	alasql('CREATE TABLE shipped(id INT IDENTITY, order_id INT IDENTITY, customer INT, whouse INT, price INT, del_date DATE);');
+	var pshipped = alasql.promise('SELECT MATRIX * FROM CSV("data/SHIPPED.csv", {headers: true})').then(
+			function(shippeds) {
+				for (var i = 0; i < shippeds.length; i++) {
+					var shipped = shippeds[i];
+					alasql('INSERT INTO shipped VALUES(?,?,?,?,?,?);', shipped);
+				}
+			});*/
+/*	// 出庫済み詳細
+	alasql('DROP TABLE IF EXISTS shipped_detail;');
+	alasql('CREATE TABLE shipped_detail(id INT IDENTITY, order_id INT IDENTITY, item INT, amount INT, price INT);');
+	var pshipped_detail = alasql.promise('SELECT MATRIX * FROM CSV("data/SHIPPED-DETAIL.csv", {headers: true})').then(
+			function(shipped_details) {
+				for (var i = 0; i < shipped_details.length; i++) {
+					var shipped_detail = shipped_details[i];
+					alasql('INSERT INTO shipped_detail VALUES(?,?,?,?,?);', shipped_detail);
+				}
+			});*/
+
+	// 得意先
+	alasql('DROP TABLE IF EXISTS customer;');
+	alasql('CREATE TABLE customer(id INT IDENTITY, name STRING, party STRING, addr STRING, tel STRING);');
+	var pcustomer = alasql.promise('SELECT MATRIX * FROM CSV("data/CUSTOMER-CUSTOMER.csv", {headers: true})').then(
+			function(customers) {
+				for (var i = 0; i < customers.length; i++) {
+					var customer = customers[i];
+					alasql('INSERT INTO customer VALUES(?,?,?,?,?);', customer);
+				}
+			});
+
 	// リロード
-	Promise.all([ pkind, pitem, pwhouse, pstock, ptrans ]).then(function() {
+	Promise.all([ pkind, pitem, pwhouse, pstock, ptrans, 
+	              pshipping_order, pshipping_detail, pshipping, /*pshipped, pshipped_detail,*/ pcustomer,
+	              pwhousing_order, pwhousing_detail, pwhousing, /*pwhoused, pwhoused_detail,*/ psupplier ]).then(function() {
 		window.location.reload(true);
 	});
 };
@@ -103,9 +231,64 @@ try {
 	alasql('SELECT * FROM whouse WHERE id = 1;');
 	alasql('SELECT * FROM stock WHERE id = 1;');
 	alasql('SELECT * FROM trans WHERE id = 1;');
+	
+	alasql('SELECT * FROM whousing_order WHERE id = 1;');
+	alasql('SELECT * FROM whousing_detail WHERE id = 1;');
+	alasql('SELECT * FROM whousing WHERE id = 1;');
+//	alasql('SELECT * FROM whoused WHERE id = 1;');
+//	alasql('SELECT * FROM whoused_detail WHERE id = 1;');
+	alasql('SELECT * FROM supplier WHERE id = 1;');
+	
+	alasql('SELECT * FROM shipping_order WHERE id = 1;');
+	alasql('SELECT * FROM shipping_detail WHERE id = 1;');
+	alasql('SELECT * FROM shipping WHERE id = 1;');
+//	alasql('SELECT * FROM shipped WHERE id = 1;');
+//	alasql('SELECT * FROM shipped_detail WHERE id = 1;');
+	alasql('SELECT * FROM customer WHERE id = 1;');
 } catch (e) {
 	alasql('CREATE localStorage DATABASE STK;');
 	alasql('ATTACH localStorage DATABASE STK;');
 	alasql('USE STK;');
 	DB.load();
 }
+// DB作成テスト
+/*
+//alasql.options.joinstar = 'overwrite';
+alasql.options.joinstar = 'json';
+var test = alasql('SELECT * FROM shipping_order')
+console.log(JSON.stringify(test));
+
+var test = alasql('SELECT * FROM shipping_detail')
+console.log(JSON.stringify(test));
+
+var test = alasql('SELECT * FROM shipping')
+console.log(JSON.stringify(test));
+
+var test = alasql('SELECT * FROM shipped')
+console.log(JSON.stringify(test));
+
+var test = alasql('SELECT * FROM shipped_detail')
+console.log(JSON.stringify(test));
+
+var test = alasql('SELECT * FROM customer')
+console.log(JSON.stringify(test));
+
+
+var test = alasql('SELECT * FROM whousing_order')
+console.log(JSON.stringify(test));
+
+var test = alasql('SELECT * FROM whousing_detail')
+console.log(JSON.stringify(test));
+
+var test = alasql('SELECT * FROM whousing')
+console.log(JSON.stringify(test));
+
+var test = alasql('SELECT * FROM whoused')
+console.log(JSON.stringify(test));
+
+var test = alasql('SELECT * FROM whoused_detail')
+console.log(JSON.stringify(test));
+
+var test = alasql('SELECT * FROM supplier')
+console.log(JSON.stringify(test));
+*/
