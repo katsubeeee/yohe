@@ -16,26 +16,26 @@ $('input[name="q3"]').val(q3);
 
 // SQLの生成
 var sql = 'SELECT * \
-	FROM whousing \
-	JOIN supplier ON supplier.id = whousing.supplier \
-	WHERE whousing.whoused = 0 AND whousing.order_id LIKE ? ';
+	FROM returning \
+	JOIN supplier ON supplier.id = returning.supplier \
+	WHERE returning.shipped = 0 AND returning.return_id LIKE ? ';
 
-sql += q1 ? 'AND whousing.whouse = ' + q1 + ' ' : '';
+sql += q1 ? 'AND returning.whouse = ' + q1 + ' ' : '';
 //sql += q2 ? 'AND kind.id = ' + q2 + ' ' : '';
 
 // SQL実行
-var whousings = alasql(sql, [ q3 + '%' ]);
+var returnings = alasql(sql, [ q3 + '%' ]);
 
 // HTML作成
 var q1 = parseInt($.url().param('q1') || '0');
-var tbody = $('#tbody-whousings');
-for (var i = 0; i < whousings.length; i++) {
-	var whousing = whousings[i];
-	var tr = $('<tr data-href="whousing-form.html?q3=' + whousing.whousing.order_id + '"></tr>');
-	tr.append('<td>' + whousing.whousing.order_id + '</td>');
-	tr.append('<td>' + whousing.supplier.name + '</td>');
-	tr.append('<td>' + numberWithCommas(whousing.whousing.price) + '</td>');
-	tr.append('<td>' + whousing.whousing.del_date + '</td>');
+var tbody = $('#tbody-returnings');
+for (var i = 0; i < returnings.length; i++) {
+	var returning = returnings[i];
+	var tr = $('<tr data-href="returning-eform.html?q3=' + returning.returning.return_id + '"></tr>');
+	tr.append('<td>' + returning.returning.return_id + '</td>');
+	tr.append('<td>' + returning.supplier.name + '</td>');
+	tr.append('<td>' + numberWithCommas(returning.returning.price) + '</td>');
+	tr.append('<td>' + returning.returning.del_date + '</td>');
 	tr.appendTo(tbody);
 }
 

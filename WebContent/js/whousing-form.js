@@ -1,6 +1,4 @@
 // 検索条件の取得
-var q1 = parseInt($.url().param('q1') || '0');
-$('select[name="q1"]').val(q1);
 var q3 = $.url().param('q3') || '';
 $('input[name="q3"]').val(q3);
 
@@ -12,12 +10,25 @@ var sql = 'SELECT * \
 	JOIN kind ON kind.id = item.kind \
 	WHERE whousing.order_id LIKE ? ';
 
-sql += q1 ? 'AND whousing.whouse = ' + q1 + ' ' : '';
+//sql += q1 ? 'AND whousing.whouse = ' + q1 + ' ' : '';
 //sql += q2 ? 'AND kind.id = ' + q2 + ' ' : '';
 
 // SQL実行
 var whousings = alasql(sql, [ q3 ]);
 //console.log(JSON.stringify(whousings));
+
+//メディア作成
+var mediaText = alasql('SELECT * \
+		FROM whousing \
+		JOIN supplier ON supplier.id = whousing.supplier \
+		WHERE whousing.order_id LIKE ?', [ q3 ])[0];
+//console.log(JSON.stringify(mediaText));
+$('#div-supplier_name').text(mediaText.supplier.name);
+$('#div-order_id').text(''+ mediaText.whousing.order_id +'');
+$('#div-price').text('￥'+ numberWithCommas(mediaText.whousing.price));
+var dat = [];
+dat = mediaText.whousing.del_date.split('-');
+$('#div-del_date').text(dat[0] +'年'+ dat[1] +'月'+ dat[2] +'日');
 
 // HTML作成
 var tbody = $('#tbody-whousings');
@@ -36,7 +47,7 @@ for (var i = 0; i < whousings.length; i++) {
 // 入庫処理
 $('#update').on('click', function() {
 	var whousingSql = alasql('SELECT * FROM whousing \
-			JOIN customer ON customer.id = whousing.customer \
+			JOIN supplier ON supplier.id = whousing.supplier \
 			WHERE whousing.order_id LIKE ?',[ q3 ])[0];
 //	console.log(JSON.stringify(whousingSql));
 	var tr_length = $('#tbody-whousings tr').length;
@@ -44,7 +55,7 @@ $('#update').on('click', function() {
 		var item_id = parseInt($('#tbody-whousings tr').eq(i).attr('item_id'));
 		var date = whousingSql.whousing.del_date;
 		var qty = parseInt($('input[name="qty"]').eq(i).val());
-		var memo = whousingSql.customer.name + 'から仕入';
+		var memo = whousingSql.supplier.name + 'から入庫';
 		var stock_id = alasql('SELECT id FROM stock WHERE item = ? AND whouse = ?',[ item_id, whousingSql.whousing.whouse ])[0].id;
 		// 在庫量に反映
 		var balance = alasql('SELECT balance FROM stock WHERE id = ?',[stock_id])[0].balance;

@@ -85,7 +85,7 @@ DB.load = function() {
 			});
 	// 入庫予定
 	alasql('DROP TABLE IF EXISTS whousing;');
-	alasql('CREATE TABLE whousing(id INT IDENTITY, order_id INT IDENTITY, customer INT, whouse INT, price INT, del_date DATE, whoused INT);');
+	alasql('CREATE TABLE whousing(id INT IDENTITY, order_id INT IDENTITY, supplier INT, whouse INT, price INT, del_date DATE, whoused INT);');
 	var pwhousing = alasql.promise('SELECT MATRIX * FROM CSV("data/WHOUSING.csv", {headers: true})').then(
 			function(whousings) {
 				for (var i = 0; i < whousings.length; i++) {
@@ -187,11 +187,46 @@ DB.load = function() {
 					alasql('INSERT INTO customer VALUES(?,?,?,?,?);', customer);
 				}
 			});
+	
+	// 返品関連
+	// 返品データ
+	alasql('DROP TABLE IF EXISTS returning;');
+	alasql('CREATE TABLE returning(id INT IDENTITY, return_id INT IDENTITY, supplier INT, whouse INT, price INT, del_date DATE, shipped INT);');
+	var preturning = alasql.promise('SELECT MATRIX * FROM CSV("data/RETURNING.csv", {headers: true})').then(
+			function(returnings) {
+				for (var i = 0; i < returnings.length; i++) {
+					var returning = returnings[i];
+					alasql('INSERT INTO returning VALUES(?,?,?,?,?,?,?);', returning);
+				}
+			});
+	// 返品詳細
+	alasql('DROP TABLE IF EXISTS returning_detail;');
+	alasql('CREATE TABLE returning_detail(id INT IDENTITY, return_id INT IDENTITY, item INT, amount INT, price INT);');
+	var preturning_detail = alasql.promise('SELECT MATRIX * FROM CSV("data/RETURNING-DETAIL.csv", {headers: true})').then(
+			function(returning_details) {
+				for (var i = 0; i < returning_details.length; i++) {
+					var returning_detail = returning_details[i];
+					alasql('INSERT INTO returning_detail VALUES(?,?,?,?,?);', returning_detail);
+				}
+			});
+	
+	// ログインユーザー管理DB
+	alasql('DROP TABLE IF EXISTS uim;');
+	alasql('CREATE TABLE uim(id INT IDENTITY, user_id INT);');
+	var puim = alasql.promise('SELECT MATRIX * FROM CSV("data/UIM.csv", {headers: true})').then(
+			function(uims) {
+				for (var i = 0; i < uims.length; i++) {
+					var uim = uims[i];
+					alasql('INSERT INTO uim VALUES(?,?);', uim);
+				}
+			});
 
 	// リロード
 	Promise.all([ pkind, pitem, pwhouse, pstock, ptrans, 
 	              pshipping_order, pshipping_detail, pshipping, /*pshipped, pshipped_detail,*/ pcustomer,
-	              pwhousing_order, pwhousing_detail, pwhousing, /*pwhoused, pwhoused_detail,*/ psupplier ]).then(function() {
+	              pwhousing_order, pwhousing_detail, pwhousing, /*pwhoused, pwhoused_detail,*/ psupplier,
+	              preturning, preturning_detail,
+	              puim]).then(function() {
 		window.location.reload(true);
 	});
 };
@@ -245,6 +280,11 @@ try {
 //	alasql('SELECT * FROM shipped WHERE id = 1;');
 //	alasql('SELECT * FROM shipped_detail WHERE id = 1;');
 	alasql('SELECT * FROM customer WHERE id = 1;');
+	
+	alasql('SELECT * FROM returning_detail WHERE id = 1;');
+	alasql('SELECT * FROM returning WHERE id = 1;');
+	
+	alasql('SELECT * FROM uim WHERE id = 1;');
 } catch (e) {
 	alasql('CREATE localStorage DATABASE STK;');
 	alasql('ATTACH localStorage DATABASE STK;');
@@ -255,6 +295,7 @@ try {
 /*
 //alasql.options.joinstar = 'overwrite';
 alasql.options.joinstar = 'json';
+// 出庫
 var test = alasql('SELECT * FROM shipping_order')
 console.log(JSON.stringify(test));
 
@@ -273,7 +314,7 @@ console.log(JSON.stringify(test));
 var test = alasql('SELECT * FROM customer')
 console.log(JSON.stringify(test));
 
-
+// 入庫
 var test = alasql('SELECT * FROM whousing_order')
 console.log(JSON.stringify(test));
 
@@ -291,4 +332,13 @@ console.log(JSON.stringify(test));
 
 var test = alasql('SELECT * FROM supplier')
 console.log(JSON.stringify(test));
+
+// 返品
+var test = alasql('SELECT * FROM returning_detail')
+console.log(JSON.stringify(test));
+
+var test = alasql('SELECT * FROM returning')
+console.log(JSON.stringify(test));
 */
+var test = alasql('SELECT * FROM uim')
+console.log(JSON.stringify(test));

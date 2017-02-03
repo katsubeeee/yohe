@@ -19,6 +19,19 @@ sql += q1 ? 'AND shipping.whouse = ' + q1 + ' ' : '';
 var shippings = alasql(sql, [ q3 ]);
 //console.log(JSON.stringify(shippings));
 
+//メディア作成
+var mediaText = alasql('SELECT * \
+		FROM shipping \
+		JOIN customer ON customer.id = shipping.customer \
+		WHERE shipping.order_id LIKE ?', [ q3 ])[0];
+//console.log(JSON.stringify(mediaText));
+$('#div-customer_name').text(mediaText.customer.name);
+$('#div-order_id').text(''+ mediaText.shipping.order_id +'');
+$('#div-price').text('￥'+ numberWithCommas(mediaText.shipping.price));
+var dat = [];
+dat = mediaText.shipping.del_date.split('-');
+$('#div-del_date').text(dat[0] +'年'+ dat[1] +'月'+ dat[2] +'日');
+
 // HTML作成
 var tbody = $('#tbody-shippings');
 for (var i = 0; i < shippings.length; i++) {
@@ -44,16 +57,16 @@ $('#update').on('click', function() {
 		var item_id = parseInt($('#tbody-shippings tr').eq(i).attr('item_id'));
 		var date = shippingSql.shipping.del_date;
 		var qty = parseInt($('input[name="qty"]').eq(i).val());
-		var memo = shippingSql.customer.name + 'に販売';
+		var memo = shippingSql.customer.name + 'へ出庫';
 		var stock_id = alasql('SELECT id FROM stock WHERE item = ? AND whouse = ?',[ item_id, shippingSql.shipping.whouse ])[0].id;
 		// 在庫量に反映
 		var balance = alasql('SELECT balance FROM stock WHERE id = ?',[stock_id])[0].balance;
 		alasql('UPDATE stock SET balance = ? WHERE id = ?', [ balance - qty, stock_id ]);
 		// トランジションに保存
 		var trans_id = alasql('SELECT MAX(id) + 1 as id FROM trans')[0].id;
-		alasql('INSERT INTO trans VALUES(?,?,?,?,?,?)', [ trans_id, stock_id, date, qty, balance - qty, memo ]);
+		alasql('INSERT INTO trans VALUES(?,?,?,?,?,?)', [ trans_id, stock_id, date, - qty, balance - qty, memo ]);
 	}
-	// 入庫したデータのwhousedに入庫済みを意味する「1」を保存する。
+	// 出庫したデータのwhousedに出庫済みを意味する「1」を保存する。
 	alasql('UPDATE shipping SET shipped = ? WHERE order_id LIKE ?', [ 1, q3 ])
 	var test = alasql('SELECT * FROM shipping WHERE shipped = 1');
 	console.log(JSON.stringify(test));

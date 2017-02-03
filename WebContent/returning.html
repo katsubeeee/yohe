@@ -13,7 +13,7 @@
 <meta name="viewport" content="width=device-width">
 <title>COMPANY</title>
 </head>
-<body style="padding-top: 80px;">
+<body style="padding-top: 80px; padding-bottom: 80px;">
 	<nav class="navbar navbar-default navbar-fixed-top">
 		<div class="container-fluid">
 			<!-- Brand and toggle get grouped for better mobile display -->
@@ -53,49 +53,45 @@
 	</nav>
 
 	<div class="container-fluid">
-		<form action="shipping-form.html" class="form-inline text-center hidden">
-		    <div class="form-group">
+		<form action="returning.html" class="form-inline text-center">
+			<div class="form-group">
 				<label>倉庫</label> <select name="q1" class="form-control">
 					<option value="0">すべて</option>
 				</select>
 			</div>
 			<div class="form-group">
-				<label>受注No.</label> <input name="q3" type="text" class="form-control"
+				<label>分類</label> <select name="q2" class="form-control">
+					<option value="0">すべて</option>
+				</select>
+			</div>
+			<div class="form-group">
+				<label>コード</label> <input name="q3" type="text" class="form-control"
 					placeholder="前方一致">
 			</div>
+			<button type="submit" class="btn btn-primary">
+				<span class="glyphicon glyphicon-search"></span> 検索
+			</button>
 		</form>
-		
-		<div class="media" style="margin-bottom: 20px;">
-			<div class="media-body" style="clear: left;">
-				<h4 class="media-heading" id="div-customer_name"
-					style="width: 200px;"></h4>
-				<div id="div-order_id"
-					style="width: 200px;"></div>
-				<div id="div-whouse" style="width: 200px;"></div>
-				<div id="div-price" style="width: 200px;"></div>
-				<div id="div-del_date" style="width: 200px;"></div>
-			</div>
-		</div>
-		
+
+		<hr>
+
 		<div class="clearfix" style="margin: 10px 0;">
-			<a id="update" href="#" class="btn btn-sm btn-success pull-right"><span
-				class="glyphicon glyphicon-plus"></span> 出庫する</a>
+			<a href="returning-form.html" class="btn btn-sm btn-success pull-right"><span
+				class="glyphicon glyphicon-plus"></span> 新規</a>
 		</div>
 
 		<table class="table table-hover table-condensed">
 			<thead>
 				<tr>
-					<th>分類</th>
-					<th>コード</th>
-					<th>メーカー</th>
-					<th>詳細</th>
-					<th>数量</th>
-					<th>金額</th>
+					<th>返品No.</th>
+					<th>取引先名</th>
+					<th>返品金額</th>
+					<th>納入日</th>
 				</tr>
 			</thead>
-			<tbody id="tbody-shippings"></tbody>
+			<tbody id="tbody-returnings"></tbody>
 		</table>
 	</div>
-	<script src="js/shipping-form.js"></script>
+	<script src="js/returning.js"></script>
 </body>
 </html>
