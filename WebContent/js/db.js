@@ -53,19 +53,19 @@ DB.load = function() {
 
 	// トランザクション
 	alasql('DROP TABLE IF EXISTS trans;');
-	alasql('CREATE TABLE trans(id INT IDENTITY, stock INT, date DATE, qty INT, balance INT, memo STRING);');
+	alasql('CREATE TABLE trans(id INT IDENTITY, stock INT,esdate DATE, date DATE, qty INT, balance INT,numb INT, treat STRING, memo STRING);');
 	var ptrans = alasql.promise('SELECT MATRIX * FROM CSV("data/TRANS-TRANS.csv", {headers: true})').then(
 			function(transs) {
 				for (var i = 0; i < transs.length; i++) {
 					var trans = transs[i];
-					alasql('INSERT INTO trans VALUES(?,?,?,?,?,?);', trans);
+					alasql('INSERT INTO trans VALUES(?,?,?,?,?,?,?,?,?);', trans);
 				}
 			});
 
 	// 入庫関連DB
 	//　発注データ
 	alasql('DROP TABLE IF EXISTS whousing_order;');
-	alasql('CREATE TABLE whousing_order(id INT IDENTITY, order_id INT IDENTITY, customer INT, whouse INT, price INT, del_date DATE);');
+	alasql('CREATE TABLE whousing_order(id INT IDENTITY, numb INT IDENTITY, customer INT, whouse INT, price INT, esdate DATE);');
 	var pwhousing_order = alasql.promise('SELECT MATRIX * FROM CSV("data/WHOUSING-ORDER.csv", {headers: true})').then(
 			function(whousing_orders) {
 				for (var i = 0; i < whousing_orders.length; i++) {
@@ -75,7 +75,7 @@ DB.load = function() {
 			});
 	// 発注詳細
 	alasql('DROP TABLE IF EXISTS whousing_detail;');
-	alasql('CREATE TABLE whousing_detail(id INT IDENTITY, order_id INT IDENTITY, item INT, amount INT, price INT);');
+	alasql('CREATE TABLE whousing_detail(id INT IDENTITY, numb INT IDENTITY, item INT, amount INT, price INT);');
 	var pwhousing_detail = alasql.promise('SELECT MATRIX * FROM CSV("data/WHOUSING-DETAIL.csv", {headers: true})').then(
 			function(whousing_details) {
 				for (var i = 0; i < whousing_details.length; i++) {
@@ -85,12 +85,12 @@ DB.load = function() {
 			});
 	// 入庫予定
 	alasql('DROP TABLE IF EXISTS whousing;');
-	alasql('CREATE TABLE whousing(id INT IDENTITY, order_id INT IDENTITY, supplier INT, whouse INT, price INT, del_date DATE, whoused INT);');
+	alasql('CREATE TABLE whousing(id INT IDENTITY, numb INT IDENTITY, supplier INT, whouse INT, price INT, esdate DATE, date DATE, memo STRING, whoused INT);');
 	var pwhousing = alasql.promise('SELECT MATRIX * FROM CSV("data/WHOUSING.csv", {headers: true})').then(
 			function(whousings) {
 				for (var i = 0; i < whousings.length; i++) {
 					var whousing = whousings[i];
-					alasql('INSERT INTO whousing VALUES(?,?,?,?,?,?,?);', whousing);
+					alasql('INSERT INTO whousing VALUES(?,?,?,?,?,?,?,?,?);', whousing);
 				}
 			});
 /*	// 入庫済み
@@ -128,7 +128,7 @@ DB.load = function() {
 	// 出庫関連DB
 	//　受注データ
 	alasql('DROP TABLE IF EXISTS shipping_order;');
-	alasql('CREATE TABLE shipping_order(id INT IDENTITY, order_id INT IDENTITY, customer INT, whouse INT, price INT, del_date DATE);');
+	alasql('CREATE TABLE shipping_order(id INT IDENTITY, numb INT IDENTITY, customer INT, whouse INT, price INT, esdate DATE);');
 	var pshipping_order = alasql.promise('SELECT MATRIX * FROM CSV("data/SHIPPING-ORDER.csv", {headers: true})').then(
 			function(shipping_orders) {
 				for (var i = 0; i < shipping_orders.length; i++) {
@@ -138,7 +138,7 @@ DB.load = function() {
 			});
 	// 受注詳細
 	alasql('DROP TABLE IF EXISTS shipping_detail;');
-	alasql('CREATE TABLE shipping_detail(id INT IDENTITY, order_id INT IDENTITY, item INT, amount INT, price INT);');
+	alasql('CREATE TABLE shipping_detail(id INT IDENTITY, numb INT IDENTITY, item INT, amount INT, price INT);');
 	var pshipping_detail = alasql.promise('SELECT MATRIX * FROM CSV("data/SHIPPING-DETAIL.csv", {headers: true})').then(
 			function(shipping_details) {
 				for (var i = 0; i < shipping_details.length; i++) {
@@ -148,12 +148,12 @@ DB.load = function() {
 			});
 	// 出庫予定
 	alasql('DROP TABLE IF EXISTS shipping;');
-	alasql('CREATE TABLE shipping(id INT IDENTITY, order_id INT IDENTITY, customer INT, whouse INT, price INT, del_date DATE, shipped INT);');
+	alasql('CREATE TABLE shipping(id INT IDENTITY, numb INT IDENTITY, customer INT, whouse INT, price INT, esdate DATE, date DATE, memo STRING, shipped INT);');
 	var pshipping = alasql.promise('SELECT MATRIX * FROM CSV("data/SHIPPING.csv", {headers: true})').then(
 			function(shippings) {
 				for (var i = 0; i < shippings.length; i++) {
 					var shipping = shippings[i];
-					alasql('INSERT INTO shipping VALUES(?,?,?,?,?,?,?);', shipping);
+					alasql('INSERT INTO shipping VALUES(?,?,?,?,?,?,?,?,?);', shipping);
 				}
 			});
 /*	// 出庫済み
@@ -191,17 +191,17 @@ DB.load = function() {
 	// 返品関連
 	// 返品データ
 	alasql('DROP TABLE IF EXISTS returning;');
-	alasql('CREATE TABLE returning(id INT IDENTITY, return_id INT IDENTITY, supplier INT, whouse INT, price INT, del_date DATE, shipped INT);');
+	alasql('CREATE TABLE returning(id INT IDENTITY, numb INT IDENTITY, supplier INT, whouse INT, price INT,predate DATE, esdate DATE, date DATE, memo STRING, shipped INT);');
 	var preturning = alasql.promise('SELECT MATRIX * FROM CSV("data/RETURNING.csv", {headers: true})').then(
 			function(returnings) {
 				for (var i = 0; i < returnings.length; i++) {
 					var returning = returnings[i];
-					alasql('INSERT INTO returning VALUES(?,?,?,?,?,?,?);', returning);
+					alasql('INSERT INTO returning VALUES(?,?,?,?,?,?,?,?,?,?);', returning);
 				}
 			});
 	// 返品詳細
 	alasql('DROP TABLE IF EXISTS returning_detail;');
-	alasql('CREATE TABLE returning_detail(id INT IDENTITY, return_id INT IDENTITY, item INT, amount INT, price INT);');
+	alasql('CREATE TABLE returning_detail(id INT IDENTITY, numb INT IDENTITY, item INT, amount INT, price INT);');
 	var preturning_detail = alasql.promise('SELECT MATRIX * FROM CSV("data/RETURNING-DETAIL.csv", {headers: true})').then(
 			function(returning_details) {
 				for (var i = 0; i < returning_details.length; i++) {
@@ -294,8 +294,8 @@ try {
 // DB作成テスト
 /*
 //alasql.options.joinstar = 'overwrite';
-alasql.options.joinstar = 'json';
-// 出庫
+alasql.options.joinstar = 'json';*/
+/*// 出庫
 var test = alasql('SELECT * FROM shipping_order')
 console.log(JSON.stringify(test));
 
@@ -339,6 +339,7 @@ console.log(JSON.stringify(test));
 
 var test = alasql('SELECT * FROM returning')
 console.log(JSON.stringify(test));
-*/
+
 var test = alasql('SELECT * FROM uim')
 console.log(JSON.stringify(test));
+*/

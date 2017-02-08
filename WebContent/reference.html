@@ -63,123 +63,54 @@
 		<!-- /.container-fluid -->
 	</nav>
 
+	
 	<div class="container-fluid">
-
-		<!-- Bread crumbs -->
+	
+	<!-- Bread crumbs -->
 		<ol class="breadcrumb">
 			<li class="topPage"><a>トップページ</a></li>
-			<li class="reference"><a>在庫照会一覧</a></li>
-			<li class="stock active"><span>在庫詳細</span></li>
+			<li class="reference active"><span>在庫照会一覧</span></li>
 		</ol>
-		
-		<form class="form-inline text-center hidden">
+	
+		<form action="reference.html" class="form-inline text-center">
 			<div class="form-group">
 				<label>倉庫</label> <select name="q1" class="form-control">
 					<option value="0">すべて</option>
 				</select>
 			</div>
 			<div class="form-group">
-				<label>ユーザー</label> <input name="q4" type="number"
-					class="form-control">
+				<label>分類</label> <select name="q2" class="form-control">
+					<option value="0">すべて</option>
+				</select>
 			</div>
+			<div class="form-group">
+				<label>コード</label> <input name="q3" type="text" class="form-control"
+					placeholder="前方一致">
+			</div>
+			<div class="form-group hidden">
+				<label>ユーザー</label> <input name="q4" type="number" class="form-control">
+			</div>
+			<button type="submit" class="btn btn-primary">
+				<span class="glyphicon glyphicon-search"></span> 検索
+			</button>
 		</form>
-
-		<!-- Abstract -->
-		<div class="media" style="margin-bottom: 20px;">
-			<div class="media-left">
-				<img id="image" src="" width=168 height=224
-					alt="画像をimgフォルダにアップロードしてください">
-			</div>
-			<div class="media-body" style="clear: left;">
-			    <table class="table">
-			<tbody>
-				<tr>
-					<th>倉庫</th>
-					<td id="whouse"></td>
-				</tr>
-				<tr>
-					<th>コード</th>
-					<td id="code"></td>
-				</tr>
-				<tr>
-					<th>メーカー</th>
-					<td id="maker"></td>
-				</tr>
-				<tr>
-					<th>詳細</th>
-					<td id="detail"></td>
-				</tr>
-				<tr>
-					<th>価格</th>
-					<td id="price"></td>
-				</tr>
-				<tr>
-					<th>残量</th>
-					<td id="balance"></td>
-				</tr>
-			</tbody>
-		</table>
-			</div>
-		</div>
-
-		<!-- Abstract -->
+		<hr>
 		
-
-		<div class="panel panel-default" style="margin-top: 20px;">
-			<div class="panel-heading">
-				<span class="glyphicon glyphicon-pencil"></span> 入庫・出庫
-			</div>
-			<div class="panel-body">
-				<div class="form">
-					<input type="hidden" name="id">
-					<div class="form-group">
-						<label>日付</label>
-						<p class="hidden" id="errorDate" style="color: red;">エラー：日付を選択してください。</p>
-						<input type="date" class="form-control"
-							name="date">
-					</div>
-					<div class="form-group">
-					<label>入庫・出庫</label>
-					<p class="hidden" id="errorTreat" style="color: red;">エラー：入庫か出庫のどちらかを選択してください。</p>
-						<select class="form-control" id="treat">
-							<option value="0">入庫か出庫を選択してください</option>
-							<option value="1">入庫</option>
-							<option value="2">出庫</option>
-						</select>
-					</div>
-					<div class="form-group">
-						<label>数量</label>
-						<p class="hidden" id="errorQty" style="color: red;">エラー：正しく数量を入力してください。</p>
-						<input type="number" class="form-control"
-							name="qty" placeholder="出庫はマイナス、入庫はプラス（0以外の数字）">
-					</div>
-					<div class="form-group">
-						<label>コメント</label>
-						<p class="hidden" id="errorMemo" style="color: red;">エラー：コメントを入力してください。</p>
-						<textarea class="form-control" name="memo"
-							placeholder="必ずコメントを入れてください"></textarea>
-					</div>
-					<button type="submit" class="btn btn-success" id="update">
-						<span class="glyphicon glyphicon-ok" aria-hidden="true"></span> 変更
-					</button>
-				</div>
-			</div>
-		</div>
-
-		<h4>変更履歴</h4>
-		<table class="table">
+		<table class="table table-hover table-condensed">
 			<thead>
 				<tr>
-					<th>変更日付</th>
-					<th>数量</th>
+					<th>倉庫</th>
+					<th>分類</th>
+					<th>コード</th>
+					<th>メーカー</th>
+					<th>詳細</th>
+					<th>金額</th>
 					<th>残量</th>
-					<th>入出庫（予定）日</th>
-					<th>コメント</th>
 				</tr>
 			</thead>
-			<tbody id="tbody-transs"></tbody>
+			<tbody id="tbody-stocks"></tbody>
 		</table>
 	</div>
-	<script src="js/stock.js"></script>
+	<script src="js/reference.js"></script>
 </body>
 </html>

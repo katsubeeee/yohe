@@ -14,7 +14,7 @@
 <title>COMPANY</title>
 </head>
 <body style="padding-top: 80px;">
-	<nav class="navbar navbar-default navbar-fixed-top">
+	<nav class="navbar navbar-inverse navbar-fixed-top">
 		<div class="container-fluid">
 			<!-- Brand and toggle get grouped for better mobile display -->
 			<div class="navbar-header">
@@ -29,8 +29,19 @@
 
 			<!-- Collect the nav links, forms, and other content for toggling -->
 			<div class="collapse navbar-collapse" id="navbar-collapse">
-				<ul class="nav navbar-nav">
-					<li><a href="index.html">在庫管理</a></li>
+				<ul class="nav navbar-nav navber-left">
+					<li class="dropdown"><a href="#" class="dropdown-toggle"
+						data-toggle="dropdown"><span
+							class="glyphicon glyphicon-th-list"></span> 在庫管理 </a>
+						<ul class="dropdown-menu">
+							<li><a onclick="window.location.reload(true);"><span
+									class="glyphicon glyphicon-refresh"></span> リロード</a></li>
+							<li><a onclick="DB.init();"><span
+									class="glyphicon glyphicon-repeat"></span> DB初期化</a></li>
+							<li role="separator" class="divider"></li>
+							<li><a onclick="DB.remove();"><span
+									class="glyphicon glyphicon-trash"></span> DB削除</a></li>
+						</ul></li>
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
 					<li class="dropdown"><a href="#" class="dropdown-toggle"
@@ -53,15 +64,21 @@
 	</nav>
 
 	<div class="container-fluid">
+	
+		<!-- Bread crumbs -->
+		<ol class="breadcrumb">
+			<li class="topPage"><a>トップページ</a></li>
+			<li class="returning-form active"><span>返品入力</span></li>
+		</ol>
+	
 		<form action="shipping-form.html" class="form-inline text-center hidden">
 		    <div class="form-group">
 				<label>倉庫</label> <select name="q1" class="form-control">
 					<option value="0">すべて</option>
 				</select>
 			</div>
-			<div class="form-group">
-				<label>発注No.</label> <input name="q3" type="text" class="form-control"
-					placeholder="前方一致">
+			<div class="form-group hidden">
+				<label>ユーザー</label> <input name="q4" type="number" class="form-control">
 			</div>
 		</form>
 		
@@ -96,10 +113,20 @@
 						</td>
 					</tr>
 					<tr>
-						<td class="col-sm-2">出納日</td>
+						<td class="col-sm-2">返品（予定）日</td>
 						<td class="col-sm-10">
 						<div>
+						<p class="hidden">エラー：日付を正しく選択してください。</p>
 						<input type="date" class="form-control" id="del_date">
+						</div>
+						</td>
+					</tr>
+					<tr>
+						<td class="col-sm-2">コメント</td>
+						<td class="col-sm-10">
+						<div>
+						<textarea class="form-control" id="memo"
+					placeholder="取引先を選択後、自動入力されます。追記も可能です。"></textarea>
 						</div>
 						</td>
 					</tr>
