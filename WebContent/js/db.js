@@ -209,6 +209,27 @@ DB.load = function() {
 					alasql('INSERT INTO returning_detail VALUES(?,?,?,?,?);', returning_detail);
 				}
 			});
+	// ロケーション関連
+	// ロケーション情報
+	alasql('DROP TABLE IF EXISTS location;');
+	alasql('CREATE TABLE location(id INT IDENTITY, stock INT, shelf INT, amount INT);');
+	var plocation = alasql.promise('SELECT MATRIX * FROM CSV("data/LOCATION.csv", {headers: true})').then(
+			function(locations) {
+				for (var i = 0; i < locations.length; i++) {
+					var location = locations[i];
+					alasql('INSERT INTO location VALUES(?,?,?,?);', location);
+				}
+			});
+	// 棚番号管理
+	alasql('DROP TABLE IF EXISTS shelf;');
+	alasql('CREATE TABLE shelf(id INT IDENTITY, dist STRING, numb INT);');
+	var pshelf = alasql.promise('SELECT MATRIX * FROM CSV("data/SHELF-SHELF.csv", {headers: true})').then(
+			function(shelfs) {
+				for (var i = 0; i < shelfs.length; i++) {
+					var shelf = shelfs[i];
+					alasql('INSERT INTO shelf VALUES(?,?,?);', shelf);
+				}
+			});
 	
 	// ログインユーザー管理DB
 	alasql('DROP TABLE IF EXISTS uim;');
@@ -226,6 +247,7 @@ DB.load = function() {
 	              pshipping_order, pshipping_detail, pshipping, /*pshipped, pshipped_detail,*/ pcustomer,
 	              pwhousing_order, pwhousing_detail, pwhousing, /*pwhoused, pwhoused_detail,*/ psupplier,
 	              preturning, preturning_detail,
+	              plocation, pshelf,
 	              puim]).then(function() {
 		window.location.reload(true);
 	});
@@ -283,6 +305,9 @@ try {
 	
 	alasql('SELECT * FROM returning_detail WHERE id = 1;');
 	alasql('SELECT * FROM returning WHERE id = 1;');
+	
+	alasql('SELECT * FROM location WHERE id = 1;');
+	alasql('SELECT * FROM shelf WHERE id = 1;');
 	
 	alasql('SELECT * FROM uim WHERE id = 1;');
 } catch (e) {

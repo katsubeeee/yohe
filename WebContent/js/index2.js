@@ -47,4 +47,8 @@ if(q4 === 0){
 //	$('.returning-form').attr('href','returning-form.html');
 //	$('.returning').attr('href','returning.html');
 	
+	/*	// クリック動作
+	$('tbody > tr').css('cursor', 'pointer').on('click', function() {
+		window.location = $(this).attr('data-href');
+	});*/
 }

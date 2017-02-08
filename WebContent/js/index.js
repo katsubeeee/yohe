@@ -1,3 +1,13 @@
+//
+$('.sideMenuOpen').click(function(){
+	$(this).toggleClass('open');
+	if($(this).hasClass('open')){
+		$('.sideMenu').animate({'left': '0px'})
+	}else{
+		$('.sideMenu').animate({'left': '-250px'})
+	}
+})
+
 // ユーザー情報入力補助
 var datalist = $('<datalist id="inputCodeList"></datalist>')
 var whouses = alasql('SELECT id, name FROM whouse');
