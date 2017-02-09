@@ -452,9 +452,25 @@ if(q4 === 0){
 			window.location.reload(true);
 		})
 	}
+	//
+	$('.sideMenuOpen').click(function(){
+		$(this).toggleClass('open');
+		if($(this).hasClass('open')){
+			$('.sideMenu').animate({'left': '0px'})
+		}else{
+			$('.sideMenu').animate({'left': '-250px'})
+		}
+	})
 
-	/*// クリック動作
-	$('#tbody-returnings > tr').css('cursor', 'pointer').on('click', function() {
+	//クリック動作
+	$('div.sideMenu > tr').css('cursor', 'pointer');
+	$('div.sideMenu > tr').hover(function(){
+		$(this).css('color','gray')
+	});
+	$('div.sideMenu > td').hover(function(){
+		$(this).css('color','grey')
+	});
+	$('div.sideMenu > tr').on('click', function() {
 		window.location = $(this).attr('data-href');
-	});*/
+	});
 }

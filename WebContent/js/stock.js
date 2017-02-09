@@ -147,4 +147,26 @@ if(q4 === 0){
 			return window.alert('エラー：コメントを必ず入力してください。');
 		}
 	});
+	
+	//
+	$('.sideMenuOpen').click(function(){
+		$(this).toggleClass('open');
+		if($(this).hasClass('open')){
+			$('.sideMenu').animate({'left': '0px'})
+		}else{
+			$('.sideMenu').animate({'left': '-250px'})
+		}
+	})
+
+	//クリック動作
+	$('div.sideMenu > tr').css('cursor', 'pointer');
+	$('div.sideMenu > tr').hover(function(){
+		$(this).css('color','gray')
+	});
+	$('div.sideMenu > td').hover(function(){
+		$(this).css('color','grey')
+	});
+	$('div.sideMenu > tr').on('click', function() {
+		window.location = $(this).attr('data-href');
+	});
 }

@@ -65,4 +65,26 @@ if(q4 === 0){
 		// リロード
 		window.location.assign('stock.html?q1='+ q1 +'&q4='+ q4 +'&id=' + stock_id);
 	});
+	
+	//
+	$('.sideMenuOpen').click(function(){
+		$(this).toggleClass('open');
+		if($(this).hasClass('open')){
+			$('.sideMenu').animate({'left': '0px'})
+		}else{
+			$('.sideMenu').animate({'left': '-250px'})
+		}
+	})
+
+	//クリック動作
+	$('div.sideMenu > tr').css('cursor', 'pointer');
+	$('div.sideMenu > tr').hover(function(){
+		$(this).css('color','gray')
+	});
+	$('div.sideMenu > td').hover(function(){
+		$(this).css('color','grey')
+	});
+	$('div.sideMenu > tr').on('click', function() {
+		window.location = $(this).attr('data-href');
+	});
 }
