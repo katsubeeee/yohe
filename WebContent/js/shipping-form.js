@@ -41,6 +41,8 @@ if(q4 === 0){
 	$('#span-numb').text(''+ mediaText.shipping.numb +'');
 	$('#span-customer_name').text(mediaText.customer.name);
 	$('#span-whouse').text(mediaText.whouse.name);
+	// ユーザー名の入力
+	$('span#user strong').text(mediaText.whouse.name);
 	var dat = [];
 	dat = mediaText.shipping.esdate.split('-');
 	$('#span-del_date').text(dat[0] +'年'+ dat[1] +'月'+ dat[2] +'日');

@@ -16,13 +16,20 @@ if(q4 === 0){
 		$('select[name="whouse"]').append(option);
 	}
 
-	var rows = alasql('SELECT * FROM item;');
+	// 検索ボックス作成
+	var rows = alasql('SELECT * FROM whouse;');
 	for (var i = 0; i < rows.length; i++) {
 		var row = rows[i];
 		var option = $('<option>');
-		option.attr('value', row.item.id);
-		option.text('[' + row.item.code + '] ' + row.item.detail);
-		$('select[name="item"]').append(option);
+		option.attr('value', row.whouse.id);
+		option.text(row.whouse.name);
+		// 隠し選択ボックスの事前選択
+		if(row.whouse.id == q1){
+			option.attr('selected','selected')
+			// ユーザー名の入力
+			$('span#user strong').text(row.whouse.name);
+		}
+		$('select[name="q1"]').append(option);
 	}
 	
 	//検索条件の取得

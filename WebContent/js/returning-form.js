@@ -39,6 +39,8 @@ if(q4 === 0){
 		// 隠し選択ボックスの事前選択
 		if(row.whouse.id == q1){
 			option.attr('selected','selected')
+			// ユーザー名の入力
+			$('span#user strong').text(row.whouse.name);
 		}
 		$('#whouse_name').append(option);
 	}

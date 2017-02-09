@@ -14,7 +14,7 @@
 <title>COMPANY</title>
 </head>
 <body style="padding-top: 80px;">
-	<nav class="navbar navbar-inverse navbar-fixed-top">
+	<nav class="navbar navbar-default navbar-fixed-top">
 		<div class="container-fluid">
 			<!-- Brand and toggle get grouped for better mobile display -->
 			<div class="navbar-header">
@@ -30,18 +30,8 @@
 			<!-- Collect the nav links, forms, and other content for toggling -->
 			<div class="collapse navbar-collapse" id="navbar-collapse">
 				<ul class="nav navbar-nav navber-left">
-					<li class="dropdown"><a href="#" class="dropdown-toggle"
-						data-toggle="dropdown"><span
-							class="glyphicon glyphicon-th-list"></span> 在庫管理 </a>
-						<ul class="dropdown-menu">
-							<li><a onclick="window.location.reload(true);"><span
-									class="glyphicon glyphicon-refresh"></span> リロード</a></li>
-							<li><a onclick="DB.init();"><span
-									class="glyphicon glyphicon-repeat"></span> DB初期化</a></li>
-							<li role="separator" class="divider"></li>
-							<li><a onclick="DB.remove();"><span
-									class="glyphicon glyphicon-trash"></span> DB削除</a></li>
-						</ul></li>
+					<li><a href="#" class="sideMenuOpen"><span
+							class="glyphicon glyphicon-th-list"></span> &nbsp;在庫管理 </a></li>
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
 					<li class="dropdown"><a href="#" class="dropdown-toggle"
@@ -62,8 +52,108 @@
 		</div>
 		<!-- /.container-fluid -->
 	</nav>
+	
+	<div class="sideMenu"
+		style="width: 250px; position: fixed; top: 50px; left: -300px; background-color: #f8f8f8; border: 1px solid #e7e7e7; z-index:10;">
+		<dl style="margin: 10px;">
+			<dt>在庫照会</dt>
+			<dd>
+				<p style="margin: 0">テキスト</p>
+				<div class="contents">
+					<table class="table table-hover table-condensed">
+						<tr class="reference">
+							<td style="border-style: none;">在庫照会</td>
+						</tr>
+					</table>
+				</div>
+			</dd>
+			<dt>入庫関連</dt>
+			<dd>
+				<p style="margin: 0">テキスト</p>
+				<div class="contents">
+					<table class="table table-hover table-condensed">
+						<tr class="whousing">
+							<td style="border-style: none;">入庫入力</td>
+						</tr>
+						<tr class="checking">
+							<td style="border-style: none;">検収チェックリスト印刷</td>
+						</tr>
+						<tr class="">
+							<td style="border-style: none;">発注データ取り込み</td>
+						</tr>
+					</table>
+				</div>
+			</dd>
+			<dt>出庫関連</dt>
+			<dd>
+				<p style="margin: 0">テキスト</p>
+				<div class="contents">
+					<table class="table table-hover table-condensed">
+						<tr class="shipping">
+							<td style="border-style: none;">出庫入力</td>
+						</tr>
+						<tr class="picking">
+							<td style="border-style: none;">ピッキングリスト印刷</td>
+						</tr>
+						<tr class="">
+							<td style="border-style: none;">受注データ取り込み</td>
+						</tr>
+					</table>
+				</div>
+			</dd>
+			<dt>返品関連</dt>
+			<dd>
+				<p style="margin: 0">テキスト</p>
+				<div class="contents">
+					<table class="table table-hover table-condensed">
+						<tr class="returning-form">
+							<td style="border-style: none;">返品入力</td>
+						</tr>
+						<tr class="returning">
+							<td style="border-style: none;">返品一覧</td>
+						</tr>
+					</table>
+				</div>
+			</dd>
+			<!-- 			<dt>戻入関連</dt>
+			<dd>
+				<p style="margin: 0">テキスト</p>
+				<div class="contents">
+					<table class="table table-hover table-condensed">
+						<tr><td style="border-style: none;"><a>戻入入力</a></td></tr>
+						<tr><td style="border-style: none;"><a>戻入一覧</a></td></tr>
+					</table>
+				</div>
+			</dd>
+			<dt>倉庫移動関連</dt>
+			<dd>
+				<p style="margin: 0">テキスト</p>
+				<div class="contents">
+					<table class="table table-hover table-condensed">
+						<tr><td style="border-style: none;"><a>倉庫間移動入力</a></td></tr>
+						<tr><td style="border-style: none;"><a>倉庫間移動商品一覧</a></td></tr>
+						<tr><td style="border-style: none;"><a>倉庫間移動商品の受取入力</a></td></tr>
+					</table>
+				</div>
+			</dd>
+			<dt>ロケーション関連</dt>
+			<dd>
+				<p style="margin: 0">テキスト</p>
+				<div class="contents">
+					<table class="table table-hover table-condensed">
+						<tr><td style="border-style: none;"><a>入庫予定の商品にロケーションを登録</a></td></tr>
+						<tr><td style="border-style: none;"><a>ロケーション未登録商品にロケーションを登録</a></td></tr>
+						<tr><td style="border-style: none;"><a>ピッキング予定にロケーションを登録</a></td></tr>
+					</table>
+				</div>
+			</dd>	 -->
+		</dl>
+	</div>
 
 	<div class="container-fluid">
+	
+		<span id="user">ユーザー名：<strong></strong></span>
+		<br>
 
 		<!-- Bread crumbs -->
 		<ol class="breadcrumb">

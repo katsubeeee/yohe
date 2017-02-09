@@ -10,6 +10,22 @@ if(q4 === 0){
 	var q1 = parseInt($.url().param('q1') || '0');
 	$('select[name="q1"]').val(q1);
 	
+	// 検索ボックス作成
+	var rows = alasql('SELECT * FROM whouse;');
+	for (var i = 0; i < rows.length; i++) {
+		var row = rows[i];
+		var option = $('<option>');
+		option.attr('value', row.whouse.id);
+		option.text(row.whouse.name);
+		// 隠し選択ボックスの事前選択
+		if(row.whouse.id == q1){
+			option.attr('selected','selected')
+			// ユーザー名の入力
+			$('span#user strong').text(row.whouse.name);
+		}
+		$('select[name="q1"]').append(option);
+	}
+	
 	//トップページのリンク設定
 	$('.topPage a').attr('href','index2.html?q1='+ q1 +'&q4='+ q4);
 	$('.reference a').attr('href','reference.html?q1='+ q1 +'&q4='+ q4);
